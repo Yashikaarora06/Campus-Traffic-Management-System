@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle Detection Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .summary {
+            margin: 20px auto;
+            font-size: 1.2em;
+        }
+        #barChart {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Vehicle Detection Results</h1>
+
+    <div class="summary">
+        <p><strong>Total Incoming Vehicles:</strong> {{ incoming }}</p>
+        <p><strong>Total Outgoing Vehicles:</strong> {{ outgoing }}</p>
+        <p><strong>Total Vehicles:</strong> {{ results.vehicle_count }}</p>
+    </div>
+
+    <h2>Live Vehicle Count Chart</h2>
+    <canvas id="barChart" width="600" height="300"></canvas>
+
+    <script>
+        const ctx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Incoming', 'Outgoing'],
+                datasets: [{
+                    label: 'Vehicle Count',
+                    data: [0, 0],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 99, 132, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true
+            }
+        });
+
+        async function updateBarChart() {
+            const response = await fetch('/live-data');
+            const data = await response.json();
+            const incoming = data.incoming_counts[data.incoming_counts.length - 1] || 0;
+            const outgoing = data.outgoing_counts[data.outgoing_counts.length - 1] || 0;
+
+            barChart.data.datasets[0].data = [incoming, outgoing];
+            barChart.update();
+        }
+
+        setInterval(updateBarChart, 2000); // Update every 2 seconds
+    </script>
+
+</body>
+</html>

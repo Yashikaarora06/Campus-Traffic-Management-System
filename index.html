@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle Detection System</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-brand logo">🚗 TrafficVision</div>
+        <ul class="nav-links">
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="#upload">Upload</a></li>
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#output">Output</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Smart Vehicle Detection</h1>
+        <p>Upload a video to detect and count incoming and outgoing vehicles in real-time.</p>
+        <a href="#upload" class="btn">Get Started</a>
+    </section>
+
+    <!-- Upload Form -->
+    <section class="styled-form" id="upload">
+        <h2>Upload Traffic Video</h2>
+        <form method="POST" action="/process" enctype="multipart/form-data">
+            <label for="video">Select Video File:</label>
+            <input type="file" name="video" id="video" required>
+            <button type="submit">Process Video</button>
+        </form>
+    </section>
+
+    <!-- Vehicle Counts -->
+    <section class="dashboard-cards" id="stats">
+        <div class="dashboard-card">
+            <h2>Incoming Vehicles</h2>
+            <p id="incoming-count">{{ incoming_count }}</p>
+        </div>
+        <div class="dashboard-card">
+            <h2>Outgoing Vehicles</h2>
+            <p id="outgoing-count">{{ outgoing_count }}</p>
+        </div>
+    </section>
+
+    <!-- Output Video -->
+    {% if output_video %}
+    <section class="styled-form" id="output">
+        <h2>Processed Output</h2>
+        <video controls width="100%" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.1);">
+            <source src="{{ url_for('static', filename='processed/' + output_video) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <a href="{{ url_for('static', filename='processed/' + output_video) }}" download class="btn" style="margin-top: 1rem;">Download Video</a>
+    </section>
+    {% endif %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2025 TrafficVision. All rights reserved.
+    </footer>
+</body>
+</html>

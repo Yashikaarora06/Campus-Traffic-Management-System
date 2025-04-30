@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Issue | Campus Traffic Management System</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Campus Traffic Management System</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/signals">Signals</a></li>
+            <li><a href="/congestion">Congestion</a></li>
+            <li><a href="/simulate">Simulate</a></li>
+            <li><a href="/report" class="active">Report</a></li>
+            <li><a href="/upload">Upload Video</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1 class="page-title">📥 Report a Traffic Issue</h1>
+        <form method="POST" class="styled-form">
+            <label for="issue">Issue</label>
+            <input type="text" name="issue" id="issue" placeholder="e.g., Accident, Roadblock..." required>
+
+            <label for="location">Location</label>
+            <input type="text" name="location" id="location" placeholder="e.g., Main Street" required>
+
+            <button type="submit" class="btn">Submit Report</button>
+        </form>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Traffic Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Campus Traffic Management System</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Campus Traffic Management System</div>
+        <ul class="nav-links">
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/signals">Signals</a></li>
+            <li><a href="/congestion">Congestion</a></li>
+            <li><a href="/simulate">Simulate</a></li>
+            <li><a href="/report">Report</a></li>
+            <li><a href="/upload">Upload Video</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <h1 class="page-title">Welcome to the Traffic Management System</h1>
+        <div class="card-grid">
+            <div class="card">
+                <h2>Manage Traffic Signals</h2>
+                <p>Monitor and control active traffic signals across the city.</p>
+                <a href="/signals" class="btn">Go to Signals</a>
+            </div>
+            <div class="card">
+                <h2>View Congestion</h2>
+                <p>Live updates on congestion levels by area.</p>
+                <a href="/congestion" class="btn">View Congestion</a>
+            </div>
+            <div class="card">
+                <h2>Simulate Traffic Lights</h2>
+                <p>Visual simulation of signal changes.</p>
+                <a href="/simulate" class="btn">Simulate</a>
+            </div>
+            <div class="card">
+                <h2>Reported Issues</h2>
+                <p>Check reports submitted by users on road conditions.</p>
+                <a href="/report" class="btn">View Reports</a>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 Traffic Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

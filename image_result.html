@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Result - Smart Vehicle Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">🚗 Smart Vehicle Tracker</div>
+  </nav>
+
+  <main class="result-section">
+    <h2>Traffic Analysis Result</h2>
+    <img src="{{ url_for('static', filename='uploads/' + image_url.split('/')[-1]) }}" alt="Uploaded Image" width="400">
+    <p class="result">🚦 Traffic Level: <strong>{{ traffic_status }}</strong></p>
+    <a href="/upload-image" class="btn">Try Another Image</a>
+  </main>
+</body>
+</html>

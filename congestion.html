@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>    <title>Dashboard - Campus Traffic Management System</title>
+    |     <title>Dashboard - Campus Traffic Management System</title>
+</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background-color: #1e293b;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a.active, .nav-links a:hover {
+            background-color: #3b82f6;
+        }
+        
+        .main-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+        }
+        
+        .report-congestion {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .report-form {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .status-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .status-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .status-option:hover {
+            opacity: 0.9;
+        }
+        
+        .status-option input {
+            margin: 0;
+        }
+        
+        .status-low {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-medium {
+            background-color: #fef9c3;
+            color: #854d0e;
+        }
+        
+        .status-high {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .submit-btn {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            height: fit-content;
+        }
+        
+        .submit-btn:hover {
+            background-color: #1d4ed8;
+        }
+        
+        .confirmation {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .confirmation.success {
+            background-color: #dcfce7;
+            color: #166534;
+            display: block;
+        }
+        
+        .confirmation.error {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            display: block;
+        }
+        
+        .congestion-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            font-size: 1.25rem;
+        }
+        
+        .stat-content h3 {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .congestion-list-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .list-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            padding: 1rem 1.5rem;
+            background-color: #f1f5f9;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .list-items {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .list-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            align-items: center;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .tag {
+            padding: 0.35rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .tag.low {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .tag.medium {
+            background-color: #fef9c3;
+            color: #854d0e;
+        }
+        
+        .tag.high {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #1e293b;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🚦  Campus Traffic Management Portal</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/signals">Signals</a></li>
+            <li><a href="/congestion" class="active">Congestion</a></li>
+            <li><a href="/simulate">Simulate</a></li>
+            <li><a href="/report">Report</a></li>
+            <li><a href="/upload">Upload Video</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1 class="page-title">📍 Traffic Congestion Reporting</h1>
+        <p>Help us monitor traffic by reporting current conditions</p>
+
+        <div class="report-congestion">
+            <h2><i class="fas fa-edit"></i> Report Traffic Conditions</h2>
+            <div class="report-form">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select id="location">
+                        <option value="">Select a location</option>
+                        <option value="vallamai_gate" selected>Vallamai Gate</option>
+                        <option value="central_junction">Central Junction</option>
+                        <option value="north_circle">North Circle</option>
+                        <option value="south_plaza">South Plaza</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Current Traffic Status</label>
+                    <div class="status-options">
+                        <label class="status-option status-low">
+                            <input type="radio" name="status" value="low"> Low
+                        </label>
+                        <label class="status-option status-medium">
+                            <input type="radio" name="status" value="medium"> Medium
+                        </label>
+                        <label class="status-option status-high">
+                            <input type="radio" name="status" value="high"> High
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="delay">Estimated Delay (minutes)</label>
+                    <input type="number" id="delay" placeholder="e.g. 15" min="0">
+                </div>
+                
+                <button class="submit-btn" id="submitReport">
+                    <i class="fas fa-paper-plane"></i> Submit Report
+                </button>
+            </div>
+            
+            <div id="confirmation" class="confirmation"></div>
+        </div>
+
+        <div class="congestion-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-car-crash"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Recent Reports</h3>
+                    <span class="stat-value" id="totalReports">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-traffic-light"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Current Status</h3>
+                    <span class="stat-value" id="currentStatus">-</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Avg. Delay</h3>
+                    <span class="stat-value" id="avgDelay">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="congestion-list-container">
+            <h3><i class="fas fa-history"></i> Recent Reports for Vallamai Gate</h3>
+            <div class="list-header">
+                <span class="header-item time-header">Time</span>
+                <span class="header-item status-header">Status</span>
+                <span class="header-item delay-header">Delay</span>
+                <span class="header-item reporter-header">Reported By</span>
+            </div>
+            <div class="list-items" id="reportsList">
+                <div class="list-item" style="grid-column: 1/-1; text-align: center; padding: 1rem;">
+                    No reports available yet
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Traffic Management System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitBtn = document.getElementById('submitReport');
+            const confirmation = document.getElementById('confirmation');
+            
+            // Initialize reports if not exists
+            if (!localStorage.getItem('trafficReports')) {
+                localStorage.setItem('trafficReports', JSON.stringify([]));
+            }
+            
+            // Load existing reports
+            loadReports();
+            updateStats();
+            
+            submitBtn.addEventListener('click', function() {
+                const location = document.getElementById('location').value;
+                const status = document.querySelector('input[name="status"]:checked');
+                const delay = document.getElementById('delay').value;
+                
+                // Validation
+                if (!location) {
+                    showMessage('Please select a location', 'error');
+                    return;
+                }
+                
+                if (!status) {
+                    showMessage('Please select a traffic status', 'error');
+                    return;
+                }
+                
+                if (!delay || isNaN(delay)) {
+                    showMessage('Please enter a valid delay time', 'error');
+                    return;
+                }
+                
+                // Create report object
+                const report = {
+                    location: location,
+                    status: status.value,
+                    delay: parseInt(delay),
+                    timestamp: new Date().toLocaleString(),
+                    reporter: 'User' // In a real app, this would be the logged in user
+                };
+                
+                // Save the report
+                saveReport(report);
+                
+                // Update UI
+                if (location === 'vallamai_gate') {
+                    addReportToUI(report);
+                }
+                updateStats();
+                
+                // Show success message
+                showMessage(`Thank you! Your report for ${getLocationName(location)} has been submitted.`, 'success');
+                
+                // Clear form
+                status.checked = false;
+                document.getElementById('delay').value = '';
+            });
+            
+            function saveReport(report) {
+                let reports = JSON.parse(localStorage.getItem('trafficReports'));
+                reports.unshift(report); // Add new report to beginning
+                
+                // Keep only last 10 reports
+                if (reports.length > 10) {
+                    reports = reports.slice(0, 10);
+                }
+                
+                localStorage.setItem('trafficReports', JSON.stringify(reports));
+            }
+            
+            function loadReports() {
+                const reports = JSON.parse(localStorage.getItem('trafficReports'));
+                const reportsList = document.getElementById('reportsList');
+                
+                // Clear existing content except the "no reports" message
+                if (!reports || reports.length === 0) return;
+                
+                // Filter reports for Vallamai Gate
+                const vallamaiReports = reports.filter(r => r.location === 'vallamai_gate');
+                
+                if (vallamaiReports.length > 0) {
+                    reportsList.innerHTML = ''; // Clear the "no reports" message
+                    
+                    vallamaiReports.forEach(report => {
+                        addReportToUI(report);
+                    });
+                }
+            }
+            
+            function addReportToUI(report) {
+                const reportsList = document.getElementById('reportsList');
+                
+                const reportItem = document.createElement('div');
+                reportItem.className = 'list-item';
+                reportItem.innerHTML = `
+                    <div class="time-info">${report.timestamp}</div>
+                    <div class="status-info">
+                        <span class="tag ${report.status}">
+                            ${report.status.charAt(0).toUpperCase() + report.status.slice(1)}
+                        </span>
+                    </div>
+                    <div class="delay-info">${report.delay} min</div>
+                    <div class="reporter-info">${report.reporter}</div>
+                `;
+                reportsList.prepend(reportItem);
+            }
+            
+            function updateStats() {
+                const reports = JSON.parse(localStorage.getItem('trafficReports'));
+                const vallamaiReports = reports ? reports.filter(r => r.location === 'vallamai_gate') : [];
+                
+                // Update total reports
+                document.getElementById('totalReports').textContent = vallamaiReports.length;
+                
+                if (vallamaiReports.length > 0) {
+                    // Update current status (most recent)
+                    const latest = vallamaiReports[0];
+                    const statusElement = document.getElementById('currentStatus');
+                    statusElement.textContent = 
+                        latest.status.charAt(0).toUpperCase() + latest.status.slice(1);
+                    statusElement.className = `tag ${latest.status}`;
+                    
+                    // Update average delay
+                    const avgDelay = vallamaiReports.reduce((sum, r) => sum + r.delay, 0) / vallamaiReports.length;
+                    document.getElementById('avgDelay').textContent = `${avgDelay.toFixed(1)} min`;
+                } else {
+                    document.getElementById('currentStatus').textContent = '-';
+                    document.getElementById('currentStatus').className = '';
+                    document.getElementById('avgDelay').textContent = '-';
+                }
+            }
+            
+            function showMessage(message, type) {
+                confirmation.textContent = message;
+                confirmation.className = `confirmation ${type}`;
+                confirmation.style.display = 'block';
+                setTimeout(() => {
+                    confirmation.style.display = 'none';
+                }, 5000);
+            }
+            
+            function getLocationName(locationId) {
+                const locations = {
+                    'vallamai_gate': 'Vallamai Gate',
+                    'central_junction': 'Central Junction',
+                    'north_circle': 'North Circle',
+                    'south_plaza': 'South Plaza'
+                };
+                return locations[locationId] || locationId;
+            }
+        });
+    </script>
+</body>
+</html>
